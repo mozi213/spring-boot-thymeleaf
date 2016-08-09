@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.api.KieBase;
 import org.kie.api.event.rule.DebugAgendaEventListener;
 import org.kie.api.event.rule.DebugRuleRuntimeEventListener;
 import org.kie.api.runtime.KieSession;
@@ -27,7 +28,7 @@ public class SpringdroolsApplicationTests {
 	private static final Logger LOG = LoggerFactory.getLogger(SpringdroolsApplicationTests.class);
 	
 	@Autowired
-	private KieSession kieSession;
+	private KieBase kieBase;
 	
 	@Test
 	public void contextLoads() {
@@ -37,6 +38,7 @@ public class SpringdroolsApplicationTests {
 	    address.setStreet("Haalstreet");
 	    address.setState("ALBANIA");
 	    
+	    KieSession kieSession = kieBase.newKieSession();
 	    // When
 	    // Let´s give the Drools Knowledge-Base an Object, we can then apply rules on
 	    kieSession.insert(address);
@@ -47,11 +49,13 @@ public class SpringdroolsApplicationTests {
 		// Then		
 		assertEquals("there´s 1 rule, so there should be 1 fired", 1, ruleFiredCount);
 		LOG.debug("Rules checked: {}" + ruleFiredCount);
+		kieSession.dispose();
 	}
 	
 	
 	@Test
 	public void helloWorldTest(){
+		KieSession kieSession = kieBase.newKieSession();
 		  // Once the session is created, the application can interact with it
         // In this case it is setting a global as defined in the
         // org/drools/examples/helloworld/HelloWorld.drl file

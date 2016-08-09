@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.newtouch.ldap.service.DroolsService;
+import cn.newtouch.ldap.service.helloworld.HelloWorldExample.Message;
 
 @RestController
 @RequestMapping(value="/drools")
@@ -18,11 +19,13 @@ public class DroolsController {
 	private DroolsService droolsService;
 	
 	@RequestMapping(value="/fire",produces=MediaType.APPLICATION_JSON_VALUE)
-	public Map<String,String> fire(){
+	public Map<String,Object> fire(){
 		
-		Map<String,String> result = new HashMap<>();
-		this.droolsService.fire();
+		Map<String,Object> result = new HashMap<>();
+		Message message = this.droolsService.fire();
 		result.put("result", "success");
+		result.put("message", message.getMessage());
+		result.put("status", message.getStatus());
 		return result;
 	}
 }

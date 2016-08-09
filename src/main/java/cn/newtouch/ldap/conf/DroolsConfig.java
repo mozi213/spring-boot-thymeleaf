@@ -10,7 +10,6 @@ import org.kie.api.builder.KieModule;
 import org.kie.api.builder.KieRepository;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.spring.KModuleBeanFactoryPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -65,12 +64,6 @@ public class DroolsConfig {
     @ConditionalOnMissingBean(KieBase.class)
     public KieBase kieBase() throws IOException {
         return kieContainer().getKieBase();
-    }
-    
-    @Bean
-    @ConditionalOnMissingBean(KieSession.class)
-    public KieSession kieSession() throws IOException {
-        return kieContainer().newKieSession();
     }
     
     /*
