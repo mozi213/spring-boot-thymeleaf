@@ -1,0 +1,19 @@
+//created on: 28.05.2015
+package cn.newtouch
+
+//list any import classes here.
+import cn.newtouch.ldap.service.internalmodel.Address
+
+//declare any global variables here
+
+
+rule "Postcode should be filled with exactly 5 numbers"
+
+    when
+        // conditions
+        Address(postcode != null, postcode matches "([0-9]{5})")
+    then
+        //actions
+		System.out.println("Rule applied, men!");
+		//results.applyResult("postcode", "INVALID", "Name should be in uppercase");
+end
