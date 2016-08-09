@@ -12,7 +12,6 @@ import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.spring.KModuleBeanFactoryPostProcessor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -25,7 +24,6 @@ public class DroolsConfig {
     private static final String RULES_PATH = "rules/";
     
     @Bean
-    @ConditionalOnMissingBean(KieFileSystem.class)
     public KieFileSystem kieFileSystem() throws IOException {
         KieFileSystem kieFileSystem = getKieServices().newKieFileSystem();
         for (Resource file : getRuleFiles()) {
@@ -40,7 +38,6 @@ public class DroolsConfig {
     }
     
     @Bean
-    @ConditionalOnMissingBean(KieContainer.class)
     public KieContainer kieContainer() throws IOException {
         final KieRepository kieRepository = getKieServices().getRepository();
         
@@ -61,7 +58,6 @@ public class DroolsConfig {
     }
     
     @Bean
-    @ConditionalOnMissingBean(KieBase.class)
     public KieBase kieBase() throws IOException {
         return kieContainer().getKieBase();
     }
@@ -72,7 +68,6 @@ public class DroolsConfig {
      *  the kie-spring integration will not work
      */
     @Bean
-    @ConditionalOnMissingBean(KModuleBeanFactoryPostProcessor.class)
     public KModuleBeanFactoryPostProcessor kiePostProcessor() {
         return new KModuleBeanFactoryPostProcessor();
     }
